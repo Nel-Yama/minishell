@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-int env(t_shell *shell)
+int	env(t_shell *shell)
 
 {
 	int	i;
@@ -26,5 +26,5 @@ int env(t_shell *shell)
 			ft_putendl_fd(shell->env_copy[i], STDOUT_FILENO);
 		i++;
 	}
-	return(0);
+	return (0);
 }

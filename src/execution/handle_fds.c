@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 12:09:50 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/01 00:33:14 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:18:51 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	ft_in_redirect_only(t_cmd *cmd)
 		if (dup2(cmd->infile_fd, STDIN_FILENO) == -1)
 			perror("dup2 infile");
 	}
-	// if (cmd->in_redir == 2 && cmd->heredoc_fd >= 0)
-	// {
-	// 	if (dup2(cmd->heredoc_fd, STDIN_FILENO) == -1)
-	// 		perror("dup2 heredoc");
-	// }
+	if (cmd->in_redir == 2 && cmd->heredoc_fd >= 0)
+	{
+		if (dup2(cmd->heredoc_fd, STDIN_FILENO) == -1)
+			perror("dup2 heredoc");
+	}
 }
 
 void	ft_dup_fds(t_arg *arg, t_cmd *cmd, int i)

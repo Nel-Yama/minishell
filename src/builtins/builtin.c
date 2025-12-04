@@ -12,7 +12,6 @@
 #include "main.h"
 
 int	is_builtin(char *cmd)
-
 {
 	if (!cmd)
 		return (0);
@@ -34,9 +33,8 @@ int	is_builtin(char *cmd)
 }
 
 int	execute_builtin(char **args, t_shell *shell)
-
 {
-	(void)shell;
+	// (void)shell;
 	if (!args || !args[0])
 		return (1);
 	if (ft_strncmp(args[0], "echo", 5) == 0)

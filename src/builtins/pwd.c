@@ -23,5 +23,5 @@ int	pwd(void)
 	}
 	ft_putendl_fd(pwd, STDOUT_FILENO);
 	free(pwd);
-	return(0);
+	return (0);
 }

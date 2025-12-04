@@ -14,7 +14,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra  -g -I./lib/libft -I./includes \
+CFLAGS = -Wall -Wextra -Werror -g -I./lib/libft -I./includes \
 	-I/opt/homebrew/opt/readline/include #-Werror
 
 # Libraries
@@ -38,18 +38,20 @@ SRC = src/lexing/ft_check_quotes.c src/lexing/lexing.c \
 	src/pipes/create_pipes.c src/get_env/ft_get_env.c \
 	src/here_doc/here_doc.c src/execution/handle_fds.c \
 	src/execution/run_cmd.c src/execution/run_child.c \
-	src/prog_exit/exit_prog.c src/prog_exit/exit_error.c
-
-# Source files dyal Lamin
-#SRC = src/env_utils/env_utils.c \
-#	src/builtins/builtin.c \
-#	src/builtins/echo.c \
-#	src/builtins/pwd.c \
-#	src/builtins/env.c \
-#	src/builtins/exit.c \
-#	src/builtins/unset.c \
-#	src/builtins/export.c \
-#	src/builtins/cd.c
+	src/prog_exit/exit_prog.c src/prog_exit/exit_error.c \
+	src/env_utils/env_utils.c \
+	src/builtins/builtin.c \
+	src/builtins/echo.c \
+	src/builtins/pwd.c \
+	src/builtins/env.c \
+	src/builtins/exit.c \
+	src/builtins/unset.c \
+	src/builtins/export.c \
+	src/builtins/export_utils.c \
+	src/builtins/cd.c \
+	src/expansion/expand_doll_quest.c \
+	src/expansion/expand_vars.c \
+	src/expansion/expand_utils.c
 
 # All source files
 SRCS = $(MAIN) $(SRC)

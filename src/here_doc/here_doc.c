@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 23:29:39 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/01 00:20:55 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:41:17 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_here_doc(t_arg *arg, t_cmd *cmd)
 	cmd->heredoc_fd = heredoc_pipe_fd[0];
 	while (1)
 	{
-		line = readline(">");
+		line = readline("heredoc>");
 		if (!line)
 			break ;
 		if (ft_strcmp(line, cmd->in_node) == 0)

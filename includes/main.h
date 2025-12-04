@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:12:46 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/25 23:05:22 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/04 00:03:55 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,21 @@ int		cd(char **args, t_shell *shell);
 int		built_exit(char **args, t_shell *shell);
 int		env(t_shell *shell);
 int		pwd(void);
+char	*expand_vars(char *str, char **env);
+int		get_var_name_len(char *str);
+char	*get_env_varue(char *var_name, char **env);
+char	*extract_var(char *str);
+int		find_dollar_var(char *str);
+int		get_dollar_len(char *str);
 int		unset(char **args, t_shell *shell);
+char	*expand_exit_stat(char *str, int exit_stat);
 int		export(char **args, t_shell *shell);
+int		valid_identifier(char *str);
+int		set_env_var(char *arg, t_shell *shell);
+int		print_export(t_shell *shell);
 char	**copy_env(char **envp);
 char	*get_env_value(char *key, t_shell *shell);
+char	*get_env_varue(char *key, char **env);
 void	free_env(char **env);
 
 /** cmd_arg : might not be used */
@@ -76,6 +87,7 @@ typedef struct s_arg
 	int		(*fd_pipe)[2];
 	int		exit_code;
 	t_cmd	*cmd;
+	t_shell	*shell;
 }	t_arg;
 
 int		ft_check_quotes(char *s);
@@ -100,6 +112,6 @@ void	exit_error(t_arg *arg, char *msg);
 void	print_custom_error(int fd, const char *s1, const char *s2);
 void	free_and_exit(t_arg *arg);
 void	free_and_return(t_arg *arg);
-int	end_main(t_arg *arg);
+int		end_main(t_arg *arg);
 
 #endif

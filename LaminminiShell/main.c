@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 20:36:52 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/04 00:08:07 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/03 22:36:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-static int	is_empy_line(char *line)
+static	int	is_empy_line(char *line)
+
 {
 	int	i;
 
@@ -40,6 +41,7 @@ static int	is_empy_line(char *line)
 }
 
 char	**expand_and_split(char *cmd, t_shell *shell)
+
 {
 	char	*expanded;
 	char	*tmp;
@@ -56,12 +58,13 @@ char	**expand_and_split(char *cmd, t_shell *shell)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_arg	arg;
-	t_cmd	*cmd;
 	char	*line;
+	char	**cmds;
+	char	**args;
+	int		i;
+	int		j;
 	t_shell	shell;
 
-	arg.shell = &shell;
 	shell.last_exit_status = 0;
 	shell.envp = envp;
 	shell.env_copy = copy_env(envp);
@@ -79,28 +82,33 @@ int	main(int ac, char **av, char **envp)
 			ft_putendl_fd("exit", STDERR_FILENO);
 			break ;
 		}
-		if (line[0] == '\0' || is_empy_line(line))
+		if (is_empy_line(line))
 		{
 			free(line);
 			continue ;
 		}
+		cmds = ft_split_smart(line, "|");
 		add_history(line);
-		if (ft_syntax_lexing(line))
+		i = 0;
+		while (cmds && cmds[i])
 		{
-			printf("minishell> Syntax Error");
-			continue ;
+			args = expand_and_split(cmds[i], &shell);
+			if (args[0] && is_builtin(args[0]))
+				shell.last_exit_status = execute_builtin(args, &shell);
+			j = 0;
+			while (args[j])
+			{
+				free(args[j]);
+				j++;
+			}
+			free(args);
+			free(cmds[i]);
+			i++;
 		}
-		if (ft_cmd_line_parsing(line, &arg, &cmd))
-		{
-			printf("minishell> Syntax Error");
-			continue ;
-		}
-		create_child_process(&arg);
-		run_children(&arg, envp);
+		free(cmds);
 		free(line);
-		end_main(&arg);
 	}
 	rl_clear_history();
 	free_env(shell.env_copy);
-	return (0);
+	return (shell.last_exit_status);
 }
