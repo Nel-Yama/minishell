@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:06:21 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/19 22:39:32 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/07 18:49:30 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_is_escaped(char *s, int i);
 int		ft_strcount_char(const char *s, int len, int c);
+int		ft_strcount_char_smart(char *s, int len, int c);
 int		ft_is_str_unique(const char *str);
 int		ft_str_has_whitespace(const char *str);
 int		ft_skip_single_quote(char *s, int *i);
@@ -50,7 +51,8 @@ void	ft_skip_word(char *s, int *i);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
-char	*ft_strdup_smart(const char *s1, int l);
+char	*ft_strdup_smart(char *s1, int l);
+char	*ft_strldup(const char *s1, int l);
 size_t	ft_strlcat(char *dest, const char *src, size_t destsize);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);

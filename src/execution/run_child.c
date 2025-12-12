@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 17:48:22 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/30 14:34:20 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/07 14:14:08 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	run_last_child(t_arg *arg, char **envp)
 {
 	t_cmd	*cmd;
 
-    cmd = &arg->cmd[arg->cmd_count - 1];
+	cmd = &arg->cmd[arg->cmd_count - 1];
 	ft_open_fds(cmd);
 	if (cmd->infile_fd < 0 || cmd->outfile_fd < 0)
 	{
@@ -52,7 +52,7 @@ static void	run_mid_child(t_arg *arg, char **envp, int i)
 {
 	t_cmd	*cmd;
 
-    cmd = &arg->cmd[i];
+	cmd = &arg->cmd[i];
 	ft_open_fds(cmd);
 	if (cmd->infile_fd < 0 || cmd->outfile_fd < 0)
 	{
@@ -80,5 +80,5 @@ void	run_children(t_arg *arg, char **envp)
 		i++;
 	}
 	if (arg->pid[arg->cmd_count - 2] && !arg->pid[arg->cmd_count - 1])
-        run_last_child(arg, envp);
+		run_last_child(arg, envp);
 }

@@ -42,7 +42,7 @@ int	rem_key(char	*key, t_shell *shell)
 	return (0);
 }
 
-int	unset(char **args, t_shell *shell)
+int	ft_unset(char **args, t_shell *shell)
 
 {
 	int	i;

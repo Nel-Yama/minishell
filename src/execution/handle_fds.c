@@ -6,13 +6,13 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 12:09:50 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/03 18:18:51 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:58:27 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static void	ft_close_current_files(t_cmd *cmd)
+void	ft_close_current_files(t_cmd *cmd)
 {
 	if (cmd->infile_fd >= 3)
 	{
@@ -29,7 +29,7 @@ static void	ft_close_current_files(t_cmd *cmd)
 void	ft_open_fds(t_cmd *cmd)
 {
 	if (cmd->in_node && cmd->in_redir == 1)
-			cmd->infile_fd = open(cmd->in_node, O_RDONLY);
+		cmd->infile_fd = open(cmd->in_node, O_RDONLY);
 	if (cmd->out_node)
 	{
 		if (cmd->out_redir == 1)

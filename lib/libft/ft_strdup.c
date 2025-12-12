@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nel-yama@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 20:59:13 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/04/22 20:59:17 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/05 20:59:12 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ char	*ft_strdup(const char *s1)
 	if (!s2)
 		return (NULL);
 	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
+
+char	*ft_strldup(const char *s1, int l)
+{
+	char	*s2;
+	int		i;
+
+	i = 0;
+	s2 = (char *)malloc((l + 1) * sizeof(char));
+	if (!s2)
+		return (NULL);
+	while (s1[i] && i < l)
 	{
 		s2[i] = s1[i];
 		i++;

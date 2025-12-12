@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_smart_helper_2.c                          :+:      :+:    :+:   */
+/*   ft_split_quote_smart_helper_2.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 17:01:44 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/09 00:18:37 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:22:42 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	allocate_sub_str(t_split *split, int k, int i, int j)
 {
+	int	quote;
+
+	quote = 0;
 	j = i;
 	while (split->s[i] && !is_char_in_str(split->sep, split->s[i]))
 	{
@@ -22,7 +25,9 @@ static void	allocate_sub_str(t_split *split, int k, int i, int j)
 		else
 			skip_unquoted(split, &i);
 	}
-	split->str_list[k] = (char *)malloc(i - j + 1);
+	quote = ft_strcount_char_smart(split->s + j, i - j, '\'');
+	quote += ft_strcount_char_smart(split->s + j, i - j, '\"');
+	split->str_list[k] = (char *)malloc(i - j + 1 - quote);
 	if (!split->str_list[k])
 	{
 		free_split(split->str_list);
@@ -32,18 +37,30 @@ static void	allocate_sub_str(t_split *split, int k, int i, int j)
 
 static void	copy_sub_str(t_split *split, int k, int *i, int j)
 {
-	j = *i;
+	int	end;
+
+	end = *i;
 	while (split->s[*i] && !is_char_in_str(split->sep, split->s[*i]))
 	{
+		j = *i;
 		if (ft_isquote(split->s[*i]) && !ft_is_escaped(split->s, *i))
+		{
 			skip_quoted(split, i);
+			j++;
+			if (!split->s[*i] && *i > 0 && !ft_isquote(split->s[*i - 1]))
+				j--;
+			ft_strlcpy(split->str_list[k] + j - end - 1, split->s + j, *i - j);
+			end += 2;
+		}
 		else
+		{
 			skip_unquoted(split, i);
+			ft_strlcpy(split->str_list[k] + j - end, split->s + j, *i - j + 1);
+		}
 	}
-	ft_strlcpy(split->str_list[k], split->s + j, *i - j + 1);
 }
 
-void	create_sub_str(t_split *split, int *i, int k)
+void	quote_smart_split_create_sub_str(t_split *split, int *i, int k)
 {
 	int	j;
 

@@ -80,7 +80,7 @@ int	change_dir(char **args, char *path)
 	return (0);
 }
 
-int	cd(char **args, t_shell *shell)
+int	ft_cd(char **args, t_shell *shell)
 
 {
 	char	*path;

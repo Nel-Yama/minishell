@@ -67,8 +67,35 @@ char	*get_env_value(char *key, t_shell *shell)
 	{
 		if (ft_strncmp(shell->env_copy[i], key, key_len) == 0
 			&& shell->env_copy[i][key_len] == '=')
-			return (shell->env_copy[i] + key_len + 1);
+			return (ft_strdup(shell->env_copy[i] + key_len + 1));
 		i++;
 	}
 	return (NULL);
+}
+
+void	increment_shlvl(t_shell *shell)
+{
+	char	*val;
+	char	*new_val_str;
+	int		lvl;
+	char	*new_entry;
+
+	val = get_env_value("SHLVL", shell);
+	if (!val || !*val || !ft_isdigit(*val))
+		lvl = 1;
+	else
+		lvl = ft_atoi(val) + 1;
+	if (val)
+		free(val);
+	if (lvl < 0)
+		lvl = 0;
+	new_val_str = ft_itoa(lvl);
+	if (!new_val_str)
+		return ;
+	new_entry = ft_strjoin("SHLVL=", new_val_str);
+	free(new_val_str);
+	if (!new_entry)
+		return ;
+	set_env_var(new_entry, shell);
+	free(new_entry);
 }

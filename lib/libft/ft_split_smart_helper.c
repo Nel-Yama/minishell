@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_smart_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nel-yama@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 16:04:09 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/08/31 16:59:05 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/09 00:06:32 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,7 @@ void	skip_separators(t_split *split, int *i)
 
 void	skip_quoted(t_split *split, int *i)
 {
-	char	quote;
-
-	quote = split->s[*i];
-	(*i)++;
-	while (split->s[*i] && (split->s[*i] != quote
-			|| ft_is_escaped(split->s, *i)))
-		(*i)++;
-	if (split->s[*i] == quote)
-		(*i)++;
+	ft_skip_quoted(split->s, i);
 }
 
 void	skip_unquoted(t_split *split, int *i)

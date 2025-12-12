@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nel-yama@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:32:31 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/18 11:32:31 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/07 10:48:37 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ int	ft_chk_illegal_chars(char *s)
 	i = 0;
 	while (s && s[i])
 	{
+		if (ft_isquote(s[i]) && !ft_is_escaped(s, i))
+		{
+			ft_skip_quoted(s, &i);
+			continue ;
+		}
 		if (is_char_in_str(ILLEGAL_CHARS, s[i]))
 		{
 			printf ("minishell: syntax error illegal char '%c'\n", s[i]);

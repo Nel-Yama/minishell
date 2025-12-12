@@ -36,14 +36,15 @@ int	built_exit(char **args, t_shell *shell)
 {
 	int	exit_code;
 
-	ft_putendl_fd("exit", STDERR_FILENO);
+	if (isatty(STDIN_FILENO))
+		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!args[1])
-		exit(shell->last_exit_status);
+		exit(*shell->last_exit_status);
 	if (!is_numeric(args[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(args[1], STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required", STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		exit(2);
 	}
 	if (args[2])

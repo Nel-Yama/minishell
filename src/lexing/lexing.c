@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nel-yama@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 21:32:36 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/17 21:32:36 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/11 08:37:18 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,14 @@ int	ft_syntax_lexing(char *s)
 	last_token = 0;
 	while (s && s[i])
 	{
-		if (ft_isquote(s[i]) && !ft_is_escaped(s, i))
+		if (ft_isquote(s[i]))
+		{
 			ft_skip_quoted(s, &i);
-		ft_skip_blank(s, &i);
-		if (ft_unquoted_lexing(s, &i, &last_token))
+			last_token = 3;
+		}
+		else if (ft_isblank(s[i]))
+			ft_skip_blank(s, &i);
+		else if (ft_unquoted_lexing(s, &i, &last_token))
 			return (1);
 	}
 	if (last_token == 1 || last_token == 2)

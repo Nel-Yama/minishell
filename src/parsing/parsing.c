@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 22:28:18 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/02 23:29:20 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/11 09:17:51 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_parse_subcmd(t_cmd *cmd, char *sub_cmd)
 		if (sub_cmd[i] == '<' || sub_cmd[i] == '>')
 		{
 			if (ft_parse_redirection(cmd, sub_cmd, &i))
-				return (1);
+				break ;
 			continue ;
 		}
 		else if (ft_parse_cmd_args(cmd, sub_cmd, &i))
@@ -48,7 +48,11 @@ int	ft_cmd_line_parsing(char *line, t_arg *arg, t_cmd **cmd)
 	i = 0;
 	while (cmd_list && cmd_list[i])
 	{
-		ft_parse_subcmd(&cmd[0][i], cmd_list[i]);
+		if (ft_parse_subcmd(&cmd[0][i], cmd_list[i]))
+		{
+			free_split(cmd_list);
+			return (1);
+		}
 		i++;
 	}
 	free_split(cmd_list);

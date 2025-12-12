@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/16 19:16:17 by marvin            #+#    #+#             */
-/*   Updated: 2025/11/16 19:16:17 by marvin           ###   ########.fr       */
+/*   Created: 2025/11/16 19:37:47 by marvin            #+#    #+#             */
+/*   Updated: 2025/11/16 19:37:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <main.h>
+#include "main.h"
 
-int	echo(char **args)
-
+int	ft_pwd(void)
 {
-	int	i;
-	int	newline;
+	char	*pwd;
 
-	newline = 1;
-	i = 1;
-	if (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
 	{
-		newline = 0;
-		i++;
+		perror("minishell: pwd");
+		return (1);
 	}
-	while (args[i])
-	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (newline)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+	ft_putendl_fd(pwd, STDOUT_FILENO);
+	free(pwd);
 	return (0);
 }

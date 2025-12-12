@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/16 19:52:06 by marvin            #+#    #+#             */
-/*   Updated: 2025/11/16 19:52:06 by marvin           ###   ########.fr       */
+/*   Created: 2025/11/16 19:16:17 by marvin            #+#    #+#             */
+/*   Updated: 2025/11/16 19:16:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "main.h"
 
-int	env(t_shell *shell)
+int	ft_echo(char **args)
 
 {
 	int	i;
+	int	newline;
 
-	i = 0;
-	if (!shell->env_copy)
-		return (1);
-	while (shell->env_copy[i])
+	newline = 1;
+	i = 1;
+	if (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
 	{
-		if (ft_strchr(shell->env_copy[i], '='))
-			ft_putendl_fd(shell->env_copy[i], STDOUT_FILENO);
+		newline = 0;
 		i++;
 	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		i++;
+	}
+	if (newline)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

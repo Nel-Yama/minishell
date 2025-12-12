@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/22 21:03:05 by nel-yama          #+#    #+#              #
-#    Updated: 2025/11/23 21:27:29 by marvin           ###   ########.fr        #
+#    Updated: 2025/12/10 16:36:51 by nel-yama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,23 +35,27 @@ MAIN = src/main.c
 # Source files from source directories
 SRC = src/lexing/ft_check_quotes.c src/lexing/lexing.c \
 	src/parsing/parsing.c src/parsing/parsing_helper.c \
+	src/parsing/parsing_helper_2.c \
 	src/pipes/create_pipes.c src/get_env/ft_get_env.c \
 	src/here_doc/here_doc.c src/execution/handle_fds.c \
 	src/execution/run_cmd.c src/execution/run_child.c \
 	src/prog_exit/exit_prog.c src/prog_exit/exit_error.c \
+	src/main_utils/main_utils.c src/main_utils/main_utils_2.c \
 	src/env_utils/env_utils.c \
 	src/builtins/builtin.c \
-	src/builtins/echo.c \
-	src/builtins/pwd.c \
-	src/builtins/env.c \
-	src/builtins/exit.c \
-	src/builtins/unset.c \
-	src/builtins/export.c \
-	src/builtins/export_utils.c \
-	src/builtins/cd.c \
-	src/expansion/expand_doll_quest.c \
-	src/expansion/expand_vars.c \
-	src/expansion/expand_utils.c
+	src/builtins/ft_echo.c \
+	src/builtins/ft_pwd.c \
+	src/builtins/ft_env.c \
+	src/builtins/ft_exit.c \
+	src/builtins/ft_unset.c \
+	src/builtins/ft_export.c \
+	src/builtins/export_print.c \
+	src/builtins/export_append.c \
+	src/builtins/ft_cd.c \
+	src/expansion/ft_expand_utils.c \
+	src/expansion/ft_expand_dollar.c \
+	src/expansion/ft_expand_var.c \
+	src/expansion/ft_expand.c
 
 # All source files
 SRCS = $(MAIN) $(SRC)

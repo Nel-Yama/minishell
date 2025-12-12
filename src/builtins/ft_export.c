@@ -25,6 +25,8 @@ int	valid_identifier(char *str)
 	i++;
 	while (str[i] && str[i] != '=')
 	{
+		if (str[i] == '+' && str[i + 1] == '=')
+			break ;
 		if (!(ft_isalnum((unsigned char)str[i]) || str[i] == '_'))
 			return (0);
 		i++;
@@ -71,22 +73,21 @@ static char	**add_to_env(char **old_env, char *new_entry)
 }
 
 int	set_env_var(char *str, t_shell *shell)
-
 {
-	char	*eq;
 	char	*new_entry;
+	char	*key;
 	int		idx;
-	int		key_len;
 
-	eq = ft_strchr(str, '=');
-	if (eq)
-		key_len = eq - str;
-	else
-		key_len = ft_strlen(str);
-	idx = find_key_index(shell->env_copy, str, key_len);
-	if (idx != -1 && !eq)
-		return (0);
-	new_entry = ft_strdup(str);
+	key = get_key(str);
+	if (!key)
+		return (1);
+	idx = find_key_index(shell->env_copy, key, ft_strlen(key));
+	if (idx != -1 && !ft_strchr(str, '='))
+		return (free(key), 0);
+	if (is_append_mode(str) && idx != -1)
+		return (free(key), handle_append(str, idx, shell));
+	new_entry = prepare_export_entry(str, key);
+	free(key);
 	if (!new_entry)
 		return (1);
 	if (idx != -1)
@@ -99,7 +100,7 @@ int	set_env_var(char *str, t_shell *shell)
 	return (shell->env_copy == NULL);
 }
 
-int	export(char **args, t_shell *shell)
+int	ft_export(char **args, t_shell *shell)
 
 {
 	int	i;
@@ -107,10 +108,10 @@ int	export(char **args, t_shell *shell)
 
 	i = 1;
 	status = 0;
-	if (!args[1])
-		print_export(shell);
 	if (!shell->env_copy || !args || !shell)
 		return (1);
+	if (!args[1])
+		return (print_export(shell));
 	while (args[i])
 	{
 		if (!valid_identifier(args[i]))

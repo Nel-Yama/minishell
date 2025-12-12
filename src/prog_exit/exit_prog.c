@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 23:41:08 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/11/30 19:45:35 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/12 18:12:08 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,18 @@ void	close_fds(t_arg *arg)
 	ft_close_files(arg);
 }
 
+static void	set_exit_code(t_arg *arg)
+{
+	if ((arg->status[arg->cmd_count - 1] & (0x7F)) == 0)
+		arg->exit_code = arg->status[arg->cmd_count - 1] >> 8;
+	else
+	{
+		arg->exit_code = (arg->status[arg->cmd_count - 1] & (0x7F)) + 128;
+		if ((arg->status[arg->cmd_count - 1] & 0x7F) == SIGINT)
+			write(1, "\n", 1);
+	}
+}
+
 /**
  * Normal exit: low 7 bits = 0, Killed by signal: low 7 bits != 0
  * [ high byte (status >> 8) ] → exit code if normal exit
@@ -112,6 +124,7 @@ int	end_main(t_arg *arg)
 	arg->status = (int *)malloc(arg->cmd_count * sizeof(int));
 	if (!arg->status)
 		exit_error(arg, "minishel: malloc failed for status");
+	signal(SIGINT, SIG_IGN);
 	i = 0;
 	while (i < arg->cmd_count)
 	{
@@ -122,12 +135,7 @@ int	end_main(t_arg *arg)
 		i++;
 	}
 	if (arg->cmd_count > 0)
-	{
-		if ((arg->status[arg->cmd_count - 1] & (0x7F)) == 0)
-			arg->exit_code = arg->status[arg->cmd_count - 1] >> 8;
-		else
-			arg->exit_code = (arg->status[arg->cmd_count - 1] & (0x7F)) + 128;
-	}
+		set_exit_code(arg);
 	free_and_return(arg);
 	return (arg->exit_code);
 }

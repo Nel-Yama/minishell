@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/22 21:03:05 by nel-yama          #+#    #+#              #
-#    Updated: 2025/11/19 22:39:57 by marvin           ###   ########.fr        #
+#    Updated: 2025/12/08 20:28:32 by nel-yama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC_FILES = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c \
 	ft_split_str.c ft_split_smart.c \
 	ft_split_smart_helper.c ft_split_smart_helper_2.c \
+	ft_split_quote_smart.c ft_split_quote_smart_helper_2.c \
 	ft_isspace.c ft_str_has_whitespace.c ft_is_str_unique.c \
 	ft_isblank.c  ft_ismeta_char.c ft_is_shell_op.c \
 	ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c \

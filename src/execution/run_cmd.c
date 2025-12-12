@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 19:03:45 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/04 00:07:41 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/11 12:19:31 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,18 @@ int	run_cmd(t_arg *arg, char *cmd, char **envp)
 {
 	char	**split_cmd;
 
-	split_cmd = ft_split_smart(cmd, " \t");
+	split_cmd = ft_split_quote_smart(cmd, " \t");
 	if (is_builtin(cmd))
 	{
-		arg->shell->last_exit_status = execute_builtin(split_cmd, arg->shell);
+		arg->exit_code = execute_builtin(split_cmd, arg->shell);
 		free_split(split_cmd);
-		arg->exit_code = 127;
 		return (0);
 	}
 	if (!pre_exec(&split_cmd[0], envp))
 	{
-		print_custom_error(2, "pipex: Command not found: ", split_cmd[0]);
-		free_split(split_cmd);
+		print_custom_error(2, "command not found", split_cmd[0]);
 		arg->exit_code = 127;
-		return (0);
+		return (free_split(split_cmd), arg->exit_code);
 	}
 	if (execve(split_cmd[0], split_cmd, envp) == -1)
 	{

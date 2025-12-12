@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 20:36:52 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/04 00:08:07 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:49:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,12 @@ int	g_signal = 0;
 
 void	sigint_handler(int sig)
 {
-	g_signal = sig;
+	(void)sig;
+	g_signal = SIGINT;
+	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-static int	is_empy_line(char *line)
-{
-	int	i;
-
-	if (!line)
-		return (1);
-	i = 0;
-	while (line[i])
-	{
-		if (!ft_isspace(line[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-char	**expand_and_split(char *cmd, t_shell *shell)
-{
-	char	*expanded;
-	char	*tmp;
-	char	**args;
-
-	expanded = expand_exit_stat(cmd, shell->last_exit_status);
-	tmp = expand_vars(expanded, shell->env_copy);
-	free(expanded);
-	expanded = tmp;
-	args = ft_split(expanded, ' ');
-	free(expanded);
-	return (args);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -61,46 +31,24 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	t_shell	shell;
 
-	arg.shell = &shell;
-	shell.last_exit_status = 0;
-	shell.envp = envp;
-	shell.env_copy = copy_env(envp);
-	if (!shell.env_copy)
+	if (ac != 1 || !av || !envp || ft_shell_init(&arg, &shell, envp))
 		return (1);
-	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	if (ac != 1 || !av || !envp)
-		return (printf("minishell>: wrong input arguments"), 0);
 	while (1)
 	{
+		signal(SIGINT, sigint_handler);
 		line = readline("minishell$ > ");
 		if (!line)
 		{
-			ft_putendl_fd("exit", STDERR_FILENO);
+			if (isatty(STDIN_FILENO))
+				ft_putendl_fd("exit", STDERR_FILENO);
 			break ;
 		}
-		if (line[0] == '\0' || is_empy_line(line))
-		{
-			free(line);
+		if (ft_lex_parse_exec(&arg, &line, &cmd))
 			continue ;
-		}
-		add_history(line);
-		if (ft_syntax_lexing(line))
-		{
-			printf("minishell> Syntax Error");
-			continue ;
-		}
-		if (ft_cmd_line_parsing(line, &arg, &cmd))
-		{
-			printf("minishell> Syntax Error");
-			continue ;
-		}
-		create_child_process(&arg);
-		run_children(&arg, envp);
-		free(line);
-		end_main(&arg);
+		ft_run_cmds_process(&arg, &line, envp);
 	}
 	rl_clear_history();
 	free_env(shell.env_copy);
-	return (0);
+	return (arg.exit_code);
 }
