@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 23:39:19 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/12 18:11:51 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:28:33 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	print_custom_error(int fd, char *s1, char *s2)
 
 void	free_and_exit(t_arg *arg)
 {
-	exit_error(arg, "minishell>: fork Failed for child process");
+	exit_error(arg, "minishell: fork Failed for child process");
 }

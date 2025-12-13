@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:12:46 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/10 18:09:01 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:42:16 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int		ft_parse_redirection(t_cmd *cmd, char *sub_cmd, int *i);
 int		ft_parse_cmd_args(t_cmd *cmd, char *sub_cmd, int *i);
 int		ft_cmd_line_parsing(char *line, t_arg *arg, t_cmd **cmd);
 int		create_child_process(t_arg *arg);
+int		check_executable_file(t_arg *arg, char *cmd);
+int		pre_exec(char **cmd, char **envp);
 int		run_cmd(t_arg *arg, char *cmd, char **envp);
 void	run_children(t_arg *arg, char **envp);
 char	*ft_get_env(const char *var, char **envp);

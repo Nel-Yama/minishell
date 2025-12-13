@@ -6,7 +6,7 @@
 #    By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/22 21:03:05 by nel-yama          #+#    #+#              #
-#    Updated: 2025/12/10 16:36:51 by nel-yama         ###   ########.fr        #
+#    Updated: 2025/12/13 14:39:53 by nel-yama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = src/lexing/ft_check_quotes.c src/lexing/lexing.c \
 	src/pipes/create_pipes.c src/get_env/ft_get_env.c \
 	src/here_doc/here_doc.c src/execution/handle_fds.c \
 	src/execution/run_cmd.c src/execution/run_child.c \
+	src/execution/run_cmd_helper.c \
 	src/prog_exit/exit_prog.c src/prog_exit/exit_error.c \
 	src/main_utils/main_utils.c src/main_utils/main_utils_2.c \
 	src/env_utils/env_utils.c \

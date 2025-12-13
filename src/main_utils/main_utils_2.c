@@ -6,7 +6,7 @@
 /*   By: nel-yama <nassr.elyamani@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 16:31:01 by nel-yama          #+#    #+#             */
-/*   Updated: 2025/12/10 18:20:26 by nel-yama         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:25:49 by nel-yama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	ft_shell_init(t_arg *arg, t_shell *shell, char **envp)
 int	ft_lex_parse_exec(t_arg *arg, char **line, t_cmd **cmd)
 {
 	if (*line[0] == '\0' || is_empty_line(*line))
-	{
-		free(*line);
-		return (1);
-	}
+		return (free(*line), 1);
 	add_history(*line);
 	if (ft_syntax_lexing(*line))
 	{
@@ -55,6 +52,8 @@ int	ft_lex_parse_exec(t_arg *arg, char **line, t_cmd **cmd)
 		return (1);
 	}
 	*line = ft_expand(line, arg);
+	if (*line[0] == '\0' || is_empty_line(*line))
+		return (free(*line), 1);
 	if (ft_cmd_line_parsing(*line, arg, cmd))
 	{
 		printf("minishell> Error\n");
